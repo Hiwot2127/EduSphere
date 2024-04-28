@@ -5,4 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Udemy </title>
 </head>
+<header>
+    <div>
+        <h1>Welcome to Udemy!</h1>
+        <p>Start learning today!</p>
+    </div>
+</header>
 <body>
