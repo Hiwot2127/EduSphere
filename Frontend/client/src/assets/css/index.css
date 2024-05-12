@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-primary: #8D68FA;
+    --bs-secondary: #73726c;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    /* font-weight: 800; */
+    line-height: 1.2
+}
+
+.text-light {
+    color:var(--bs-secondary);
+}
+
+li {
+    list-style: none;
+}
+
+.container-fluid {
+    padding: 15px;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 110px;
+}
+
+.header-search input {
+    height: 45px;
+    width: 800px;
+    border-radius: 50px;
+    border: 1px solid #646464;
+    padding: 0 40px;
+    font-size: 15px;
+    outline: none;
+}
+
+.header-cart-icon i {
+    font-size: 35px;
+}
+
+.header-button {
+    width: 180px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hero-image img {
+    width: 1340;
+    height:400;
+    margin-bottom: 70px;
+}
+
+.banner-wrapper {
+    margin: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 80px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 25px 0;
+}
+
+.banner-left {
+    width: 50%;
+}
+
+.courses-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.course-item {
+    cursor: pointer;
+    width: 260px;   
+}
+
+.course-image img {
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.course-name h4 {
+    margin-bottom: 5px;
+}
+
+.course-rating {
+    display: flex;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.course-rating-number {
+    color: #be5a0e;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.course-rating-reviews {
+    margin-left: 5px;
+}
+
+.course-price {
+    margin-top: 10px;
+}
+
+.partner-container {
+    text-align: center;
+    margin: 100px 0;
+    background-color: #1F1F1F;
+    color: #fff;
+    padding: 10px 0;
+}
+.partner-info {
+    display: flex; 
+    justify-content: space-evenly;
+    margin-top: 35px;
+}

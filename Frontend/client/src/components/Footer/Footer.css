@@ -1,0 +1,13 @@
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px 50px;
+    background-color: #0a0a0a;
+}
+
+footer a {
+    text-decoration: none;
+    line-height: 35px;
+    color:  #f3f2f7;
+}

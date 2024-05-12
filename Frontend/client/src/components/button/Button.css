@@ -1,0 +1,19 @@
+.btn {
+    padding: 10px 20px;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #080808;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-outline-primary {
+    color: #080808;
+    border-color: #080809;
+    border: 1px solid #070707;
+}
