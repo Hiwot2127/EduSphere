@@ -11,3 +11,99 @@ footer a {
     line-height: 35px;
     color:  #f3f2f7;
 }
+
+.Fotter{
+    background-color: rgb(28,29,31);
+    padding: 25px;
+    position: relative;
+    
+}
+.fotterbutton button{
+    padding: 10px;
+    font-size: 18px;
+    width: 80px;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+
+.fotterbutton{
+    
+    border: solid 1px white;
+    cursor: pointer;
+    margin-left: 40px;
+    position: absolute;
+    right: 50px;
+    top: 30px;
+    cursor: pointer;
+    vertical-align: middle;
+    padding-bottom: 3px;
+}
+
+
+.Fotter a {
+    text-decoration: none;
+    
+}
+
+
+.Fotter a li{
+    list-style: none;
+    font-size: 0.9rem;
+    padding-bottom: 10px;
+    color: rgb(247,249,250);
+    text-decoration: none;
+    
+}
+.FooterInside ul a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .FooterInside ul a:hover {
+    color: #ff4500;
+  }
+  
+.Fotter a li:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.Fotterinside{
+    display: flex;
+    justify-content: space-between;
+    width: 55%;
+    padding-right: 20px;
+    align-items: center;
+    
+}
+
+.fotterbutton img{
+    width: 18px;
+    height: 18px;
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 12px;
+    
+}
+
+.Fotter h4{
+    color: white;
+    font-size: 13px;
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+}
+
+.fotterlogo img{
+    width: 100px;
+    padding-left: 45px;
+}
+
+
+.Fotterinside{
+    padding-bottom: 40px;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Header from '../components/Header'
+import Header from '../components/Header2'
 import Hero from '../components/Hero'
 import Course from '../components/Course'
 import Banner from '../components/Banner'

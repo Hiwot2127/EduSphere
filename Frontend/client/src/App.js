@@ -1,12 +1,11 @@
 import React from 'react';
-import Home from './pages/Home'
+import { AllRoutes } from "./components/Routes/router";
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <Home/>
+    <div className="main-cont">
+      <AllRoutes />
     </div>
   );
-}
+};
 
-export default App;

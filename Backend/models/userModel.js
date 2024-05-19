@@ -1,34 +1,29 @@
-import mongoose from 'mongoose'
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-const userSchema = mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true
-        },
+const userSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+  {
+    versionKey: false,
+    timestamps: true,
+  }
+);
 
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password")) return next();
+  var hash = bcrypt.hashSync(this.password, 8);
+  this.password = hash;
+  return next();
+});
 
-        password: {
-            type: String,
-            required: true
-        },
+userSchema.methods.checkPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
-        isInstructor: {
-            type: Boolean,
-            default: false
-        }
-    },
+const User = mongoose.model("user", userSchema);
 
-    {
-        timestamps: true
-    }
-)
-
-const User = mongoose.model('User', userSchema)
-
-export default User
+module.exports = User;
