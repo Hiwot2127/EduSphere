@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -13,6 +14,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// Pre-save hook to hash the password before saving
 userSchema.pre("save", function (next) {
   if (!this.isModified("password")) return next();
   var hash = bcrypt.hashSync(this.password, 8);
