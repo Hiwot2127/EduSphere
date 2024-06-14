@@ -13,7 +13,7 @@ const uploadsDir = path.join(__dirname, './uploads')
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
-
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, './uploads'));
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
     cb(null, `${file.fieldname}-${Date.now()}${ext}`);
   },
 });
-
+// File filter function to allow only specific file types
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = ['application/pdf', 'video/mp4', 'video/x-matroska', 'video/webm', 'video/ogg'];
   if (allowedMimeTypes.includes(file.mimetype)) {
@@ -36,7 +36,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
   storage,
   fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 }
+  limits: { fileSize: MAX_FILE_SIZE }
 }).single('file'); 
 
 
