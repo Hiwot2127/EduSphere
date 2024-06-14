@@ -12,17 +12,47 @@ const reviewSchema = mongoose.Schema(
 
 const courseSchema = mongoose.Schema(
     {
-        instructor: {
-            type: mongoose.Schema.Types.ObjectId,
+        author: {
+            type: String,
             required: true,
-            ref: 'User'
         },
         
         title: {
             type: String,
             required: true,
         },
-
+        discount: {
+            type: Number,
+            default: 0
+        },
+        category: {
+            type: String,
+            required: true
+        },
+        sub_category: {
+            type: String,
+            required: true
+        },
+        topic: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        },
+        qty: {
+            type: Number,
+            required: true
+        },
+        level: {
+            type: String,
+            required: true
+        },
+        details: {
+            type: Array,
+            required: true
+        },       
         image: {
             type: String,
             required: true
@@ -33,23 +63,18 @@ const courseSchema = mongoose.Schema(
             required: true
         },
 
-        reviews: [reviewSchema],
-
         rating: {
             type: Number,
-            required: true,
             default: 0
         },
 
         numReviews: {
             type: Number,
-            required: true,
             default: 0
         },
 
         price: {
             type: Number,
-            required: true,
             default: 0
         },
     },
@@ -58,7 +83,6 @@ const courseSchema = mongoose.Schema(
         timestamps: true
     }
 )
-
 const Course = mongoose.model('Course', courseSchema)
 
 export default Course

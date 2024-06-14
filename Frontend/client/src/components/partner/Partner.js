@@ -1,9 +1,10 @@
 import React from 'react'
-import Partner1 from '../assets/images/partner1.svg'
-import Partner2 from '../assets/images/partner2.svg'
-import Partner3 from '../assets/images/partner3.svg'
-import Partner4 from '../assets/images/partner4.svg'
-import Partner5 from '../assets/images/partner5.svg'
+import './Partner.css'
+import Partner1 from '../../assets/images/partner1.svg'
+import Partner2 from '../../assets/images/partner2.svg'
+import Partner3 from '../../assets/images/partner3.svg'
+import Partner4 from '../../assets/images/partner4.svg'
+import Partner5 from '../../assets/images/partner5.svg'
 
 const Partner = () => {
     return (

@@ -1,0 +1,174 @@
+.header-container {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.topnavbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.udemylink img {
+  height: 40px;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-items .linkstyle, .nav-items .cart, .nav-items .main-nav, .nav-items .searchbar, .nav-items .login, .nav-items .signup {
+  margin: 0 10px;
+}
+
+.header-container .searchbar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.header-container .searchbar input {
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+  width: 300px;
+}
+
+.header-container .searchbar button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.header-container .linkstyle {
+  text-decoration: none;
+}
+  .header-container .searchbar {
+    flex-grow: 1;
+  }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content .linkstyle, .dropdown-content .cart, .dropdown-content .lang {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content .linkstyle:hover, .dropdown-content .cart:hover, .dropdown-content .lang:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-items.open {
+    display: flex;
+  }
+
+  .searchbar input {
+    width: 90%;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-items .linkstyle, .nav-items .cart, .nav-items .main-nav, .nav-items .searchbar, .nav-items .login, .nav-items .signup {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchbar {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .searchbar input {
+    width: 90%;
+  }
+
+  .nav-items .linkstyle, .nav-items .cart, .nav-items .main-nav, .nav-items .login, .nav-items .signup {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.linkstyle {
+  padding: 10px 20px;
+  background-color: #6200ea;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.linkstyle:hover {
+  background-color: #3700b3;
+}
+
+.login, .signup {
+  background-color: #03dac6;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login:hover, .signup:hover {
+  background-color: #018786;
+}

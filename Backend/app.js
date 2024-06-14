@@ -1,31 +1,31 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import path from "path";
 const app = express();
+import routes from "./routes/index.js";
+import morgan from "morgan";
+import { fileURLToPath } from 'url';
 
-const connect = require("./config/db");
-app.use(cors());
+import cookieParser from "cookie-parser";
+import errorHandler from "./middlewares/errorhandler.js";
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  }));
 app.use(express.json());
-const PORT = process.env.PORT || 3000;
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+app.use(cookieParser());
 
-const userController = require("./controller/user.controller");
-const { authenticate } = require("./middlewares/authenticate");
 
-app.use("/join", userController);
-app.post("/auth", authenticate, async (req, res) => {
-  try {
-    return res.status(200).send({ auth: true, user: req.user });
-  } catch (err) {
-    return res.status(500).send(err.message);
-  }
-});
+app.use("/api/v1/join", routes.userAuth);
+app.use("/api/v1/stripe", routes.stripe);
+app.use("/api/v1/upload", routes.upload);
+app.use("/api/v1/courses", routes.courses);
+const __filename = fileURLToPath(import.meta.url);
 
-app.listen(PORT, async () => {
-  try {
-    await connect();
-    console.log('listening of port ${PORT}');
-  } catch (err) {
-    console.warn(err.message);
-  }
-  ;
+const __dirname = path.dirname(__filename);
+app.use('/outputs', express.static(path.join(__dirname, './middlewares/uploads')));
+app.use(errorHandler)
 
-});
+export default app;

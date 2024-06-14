@@ -1,0 +1,51 @@
+.upper-banner {
+    background-image: url('https://via.placeholder.com/1500x500'); /* Replace with actual image URL */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.upper-banner  .banner-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.upper-banner h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.upper-banner p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upper-banner .search-form input {
+    width: 60%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.upper-banner .search-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #e67300;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.upper-banner .search-form button:hover {
+    background-color: #cc6600;
+}

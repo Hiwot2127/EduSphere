@@ -1,12 +1,12 @@
 import express from 'express'
 const router = express.Router()
 
-import {
-    getCourses,
-    getCourseById
-} from '../controllers/courseController.js'
+import courseController from '../controllers/courseController.js'
 
-router.route('/').get(getCourses)
-router.route('/:id').get(getCourseById)
+router.get('/', courseController.getCourse)
+router.get('/:id', courseController.getCourseById)
+router.post('/', courseController.createCourse)
+router.put('/:id', courseController.updateCourse)
+router.delete('/:id', courseController.deleteCourse)
 
 export default router

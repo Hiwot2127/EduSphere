@@ -1,16 +1,23 @@
+// Importing necessary modules and components
 import { Header } from "../Header/Header";
-import "../Header/header.css";
+import "./Landing.css"; // CSS for the Header component
 import React from 'react';
-import banner from "./middle.jpg";
+import { ToastContainer, toast } from 'react-toastify'; // Toast notifications
+import 'react-toastify/dist/ReactToastify.css'; // CSS for toast notifications
+import banner from "./middle.jpg"; // Banner image
 import { Link } from "react-router-dom";
-import { ProdCard, SuggestionCard, TechCard } from "../ProdCard/ProdCard";
-import { PopperCard } from "../ProdCard/popperprodcard";
-import { styled } from "@mui/material/styles";
-import { nanoid } from "nanoid";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { ProdCard, SuggestionCard, TechCard } from "../ProdCard/ProdCard"; // Product cards and suggestion cards
+import { PopperCard } from "../ProdCard/popperprodcard"; // Popper card component
+import { styled } from "@mui/material/styles"; // MUI styling
+import { nanoid } from "nanoid"; // Nanoid for unique IDs
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip"; // MUI Tooltip
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import Skeleton from "@mui/material/Skeleton";
+import axios from "axios"; // Axios for API requests
+import Skeleton from "@mui/material/Skeleton"; // Skeleton component for loading state
+import { useDispatch, useSelector } from "react-redux";
+import { notify } from "../../Redux/login/action"; // Redux actions
+
+// Styling for LightTooltip component
 export const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -19,6 +26,8 @@ export const LightTooltip = styled(({ className, ...props }) => (
     padding: "0",
   },
 }));
+
+// Main Landing Page component
 export const Landigpage = () => {
   return (
     <>
@@ -27,25 +36,30 @@ export const Landigpage = () => {
   );
 };
 
+// Banner component
 const Banner = () => {
-  // const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const loading = useRef(true);
   const [products, setProducts] = useState([]);
+  let { message } = useSelector((store) => store.auth);
+
+  // Effect to display notifications
   useEffect(() => {
-    axios
-      .get("https://udemy-vr4p.onrender.com/courses")
-      .then(({ data }) => {
-        // console.log(data);
-        loading.current = false;
-        setProducts([...data]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (message !== "") {
+      dispatch(notify(""));
+      toast.warn(message);
+      message = "";
+    }
   }, []);
+
+  // Effect to fetch products from API
+
   return (
     <>
-      <section>
+      <div className="toast">
+        <ToastContainer />
+      </div>
+      <section className="landing-container">
         <div className="midbanner">
           <div className="bannercard">
             <div>
@@ -57,19 +71,11 @@ const Banner = () => {
             </div>
           </div>
           <div className="bannerdiv">
-            <img src={banner} alt="some" />
+            <img src={banner} alt="banner" />
           </div>
         </div>
       </section>
-
-      {loading.current ? (
-        <>
-          <SkeltonLoading />
-          <SkeltonLoading />
-        </>
-      ) : (
-        <>
-          <section>
+          <section className="landing-container">
             <div className="headline">
               <div className="headline_main-text">
                 A broad selection of courses
@@ -80,34 +86,17 @@ const Banner = () => {
               </div>
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <div className="data-comp">
               <div className="data-cont">
                 <div className="topic-btn">
-                  <button>
-                    <span>Python</span>
-                  </button>
-                  <button>
-                    <span>Excel</span>
-                  </button>
-                  <button>
-                    <span>Web Development</span>
-                  </button>
-                  <button>
-                    <span>JavaScrip</span>
-                  </button>
-                  <button>
-                    <span>Data Science</span>
-                  </button>
-                  <button>
-                    <span>AWS Certification</span>
-                  </button>
-                  <button>
-                    <span>AWS Certification</span>
-                  </button>
-                  <button>
-                    <span>Drawing</span>
-                  </button>
+                  <button><span>Python</span></button>
+                  <button><span>Excel</span></button>
+                  <button><span>Web Development</span></button>
+                  <button><span>JavaScript</span></button>
+                  <button><span>Data Science</span></button>
+                  <button><span>AWS Certification</span></button>
+                  <button><span>Drawing</span></button>
                 </div>
                 <div className="skill-hub">
                   <div className="skill-desc">
@@ -125,7 +114,7 @@ const Banner = () => {
                       <span>Explore Python</span>
                     </Link>
                   </div>
-                  <div className="prod-cont">
+                  {/* <div className="prod-cont">
                     {products.map((el) => (
                       <LightTooltip
                         arrow
@@ -135,28 +124,27 @@ const Banner = () => {
                         <ProdCard data={el} />
                       </LightTooltip>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <SuggestionCard
               title={"Popular for advancing Web Developers"}
               data={products}
-              category={"It & Software"}
+              category={"IT & Software"}
             />
             <SuggestionCard
-              title={"Popul in Marketing"}
+              title={"Popular in Marketing"}
               data={products}
               category={"Marketing"}
             />
           </section>
-
-          <section>
+          <section className="landing-container">
             <TechCard />
           </section>
-          <section>
+          <section className="landing-container">
             <div className="featured">
               <div className="feature-cont">
                 <h2>Featured topic by category</h2>
@@ -164,84 +152,60 @@ const Banner = () => {
                   <div>
                     <h3>Development</h3>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                   </div>
                   <div>
                     <h3>Development</h3>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                   </div>
                   <div>
                     <h3>Development</h3>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                   </div>
                   <div>
                     <h3>Development</h3>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                     <div className="topic">
-                      <Link className="trendlink" to={"#"}>
-                        Python
-                      </Link>
+                      <Link className="trendlink" to={"#"}>Python</Link>
                       <span>34,280,976 students</span>
                     </div>
                   </div>
@@ -252,13 +216,13 @@ const Banner = () => {
               </div>
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <div className="poster1">
               <div className="poster-cont">
                 <img
                   className="banner-2"
                   src="https://s.udemycdn.com/home/non-student-cta/instructor-1x-v3.jpg"
-                  alt=""
+                  alt="banner"
                 />
                 <div>
                   <PitchCard
@@ -272,12 +236,12 @@ const Banner = () => {
               </div>
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <div className="partner">
               <Patner />
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <div className="poster1">
               <div className="poster-cont">
                 <div>
@@ -286,18 +250,18 @@ const Banner = () => {
                 <img
                   className="banner-2"
                   src="https://s.udemycdn.com/home/non-student-cta/ub-1x-v3.jpg"
-                  alt=""
+                  alt="banner"
                 />
               </div>
             </div>
           </section>
-          <section>
+          <section className="landing-container">
             <div className="poster1">
               <div className="poster-cont">
                 <img
                   className="banner-2"
                   src="https://s.udemycdn.com/home/non-student-cta/transform-1x-v3.jpg"
-                  alt=""
+                  alt="banner"
                 />
                 <div>
                   <PitchCard
@@ -311,14 +275,12 @@ const Banner = () => {
               </div>
             </div>
           </section>
-          <section></section>
+          <section className="landing-container"></section>
         </>
-      )}
-    </>
   );
 };
-/*
- */
+
+// PitchCard component for instructor and other cards
 const PitchCard = ({ title, des, btn }) => {
   return (
     <div className="pitch-cont">
@@ -328,13 +290,15 @@ const PitchCard = ({ title, des, btn }) => {
     </div>
   );
 };
+
+// PitchCard2 component for Udemy Business
 const PitchCard2 = () => {
   return (
     <div className="pitch-cont">
       <img
         className="pitchcard2img"
         src="https://www.udemy.com/staticx/udemy/images/v7/logo-ub.svg"
-        alt=""
+        alt="Udemy Business"
       />
       <p className="pitchdec">
         Get unlimited access to 6,000+ of Udemy’s top courses for your team.
@@ -345,9 +309,10 @@ const PitchCard2 = () => {
   );
 };
 
+// Udemy button component
 const UdemyBtn = ({ btn }) => {
   return (
-    <div>
+    <div className="landing-container">
       <Link to={"#"} className="udemylinkbtn">
         {btn}
       </Link>
@@ -355,56 +320,58 @@ const UdemyBtn = ({ btn }) => {
   );
 };
 
+// Partner component to display company logos
 const Patner = () => {
   return (
-    <div>
+    <div className="landing-container">
       <h3 className="partner-title">Trusted by companies of all sizes</h3>
       <div className="parner-logo-cont">
         <img
           src="https://s.udemycdn.com/partner-logos/v4/nasdaq-dark.svg"
-          alt=""
+          alt="Nasdaq"
         />
         <img
           src="https://s.udemycdn.com/partner-logos/v4/volkswagen-dark.svg"
-          alt=""
+          alt="Volkswagen"
         />
         <img
           src="https://s.udemycdn.com/partner-logos/v4/box-dark.svg"
-          alt=""
+          alt="Box"
         />
         <img
           src="https://s.udemycdn.com/partner-logos/v4/netapp-dark.svg"
-          alt=""
+          alt="NetApp"
         />
         <img
           src="https://s.udemycdn.com/partner-logos/v4/eventbrite-dark.svg"
-          alt=""
+          alt="Eventbrite"
         />
       </div>
     </div>
   );
 };
 
-const SkeltonLoading = () => {
+// Skeleton loading component for placeholders
+export const SkeltonLoading = () => {
   return (
-    <>
-      <div className="skelton">
-        <Skeleton className="line" variant="text" animation="wave" />
-        <div className="midskel">
-          <Skeleton
-            className="rectangel"
-            variant="rectangular"
-            width={50}
-            height={50}
-          />
-          <div>
-            <Part />
-          </div>
+    <div className="skelton">
+      <Skeleton className="line" variant="text" animation="wave" />
+      <div className="midskel">
+        <Skeleton
+          className="rectangel"
+          variant="rectangular"
+          width={50}
+          height={50}
+        />
+        <div>
+          <Part />
         </div>
       </div>
-    </>
+    </div>
   );
 };
+
+// Part of Skeleton component for detailed placeholders
 const Part = () => {
   return (
     <>

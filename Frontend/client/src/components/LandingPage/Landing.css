@@ -1,0 +1,299 @@
+.landing-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .toast {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+  }
+  
+  .landing-container .midbanner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .landing-container .bannercard {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .landing-container .bannercard h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .landing-container .bannercard p {
+    font-size: 1.2rem;
+  }
+  
+  .landing-container .bannerdiv {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .landing-container .bannerdiv img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .landing-container .headline {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .landing-container .headline_main-text {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .landing-container .headline_sub-text {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  
+  .landing-container .data-comp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .landing-container .data-cont {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .landing-container  .topic-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .landing-container .topic-btn  {
+    background-color: #fff;
+    color: black;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .landing-container button{
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .landing-container .topic-btn button:hover {
+    background-color: #0056b3;
+  }
+  
+.skill-hub {
+  margin-top: 1rem;
+  border: 1px solid #d1d7dc;
+  padding: 2.3rem;
+}
+  
+  .landing-container .skill-desc {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .landing-container .skill-desc h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .landing-container .skill-desc p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .landing-container .skill-titl-btn {
+    background-color: #ff9f1a;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .landing-container.skill-titl-btn:hover {
+    background-color: #e68900;
+  }
+  
+
+
+  .featured {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f7f8fa;
+}
+
+.feature-cont h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.topic {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.trendlink {
+  color: #0073b1;
+  text-decoration: none;
+}
+
+.trendlink:hover {
+  text-decoration: underline;
+}
+
+.com-btn {
+  display: inline-block;
+  background-color: #0073b1;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.com-btn:hover {
+  background-color: #005f8f;
+}
+
+.poster1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.poster-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-2 {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.pitch-cont {
+  text-align: center;
+  max-width: 600px;
+}
+
+.pitchHead {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.pitchdec {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.udemylinkbtn {
+  display: inline-block;
+  background-color: #0073b1;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.udemylinkbtn:hover {
+  background-color: #005f8f;
+}
+
+.partner-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.parner-logo-cont {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.skelton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.midskel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.line {
+  width: 100%;
+  max-width: 600px;
+  height: 20px;
+}
+
+.rectangel {
+  width: 50px;
+  height: 50px;
+}
+
+@media (min-width: 768px) {
+  .midbanner {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .bannerdiv {
+    margin-left: 20px;
+  }
+
+  .skill-hub {
+    flex-direction: row;
+  }
+
+  .prod-cont {
+    justify-content: flex-start;
+  }
+
+  .poster1 {
+    flex-direction: row;
+  }
+
+  .poster-cont {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .banner-2 {
+    margin-left: 20px;
+  }
+}

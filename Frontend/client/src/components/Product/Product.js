@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./Product.css";
 import ReportIcon from "@mui/icons-material/Report";
 // import LanguageTwoToneIcon from '@mui/icons-materialLanguageTwoTone';
@@ -9,6 +11,7 @@ import ArrowRightSharpIcon from "@mui/icons-material/ArrowRightSharp";
 import StarPurple500SharpIcon from "@mui/icons-material/StarPurple500Sharp";
 import StarHalfSharpIcon from "@mui/icons-material/StarHalfSharp";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import { SkeltonLoading } from "../LandingPage/Landin";
 
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -31,8 +34,45 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Header } from "../Header/Header";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useRef } from "react";
+axios.defaults.withCredentials = true;
 
 export const Product = () => {
+  const location = useLocation();
+  const pathname  = (location.pathname).split("/");
+  const loading = useRef(true);
+  let author = "";
+  const id = pathname[pathname.length - 1];
+
+  const [ data,setData] = useState({});
+  if (data?.visible_instructors?.length > 0){
+    for (const inst of data.visible_instructors)
+    author = author + " " + inst.display_name;
+  console.log(author)
+  }
+  const [result, setResult] = useState([]);
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/v1/courses/${id}`).then((res) => {
+      loading.current = false;
+      setData(res.data.data);
+      res.data.data.curriculum.sort((a, b) => a.sort_order - b.sort_order);
+      const results = [];
+      res.data.data.curriculum.map((curr) => {
+        if (curr?._class === "chapter") {
+          console.log(curr)
+
+          results.push(curr);
+        }});
+      console.log(res.data.data);
+      setResult(results);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -45,27 +85,33 @@ export const Product = () => {
   return (
     <div>
       {/* <PlayCircleFilledRoundedIcon/> */}
-      <div className="BlackBox">
+      {loading.current ? (
+        <>
+          <SkeltonLoading />
+          <SkeltonLoading />
+        </>
+      ) : (
+<>
+<div className="BlackBox">
         <div className="BBText">
           <div className="flex purpal">
-            <h5>Development</h5>
+            <h5>{data?.category || ""}</h5>
             <span className="icon">
               <ArrowRightSharpIcon />
             </span>
-            <h5> Programming Languages </h5>
+            <h5> {data?.sub_category || ""} </h5>
             <span className="icon">
               <ArrowRightSharpIcon />
             </span>
-            <h5>Data Analysis</h5>
+            <h5>{data?.sub_category || ""}</h5>
           </div>
 
           <h1 className="white headingTop1">
-            Learning Python for Data Analysis and Visualization
+            {data?.title || "Python for Data Science and Machine Learning Bootcamp"}
           </h1>
 
           <h3 className="white">
-            Learn python and how to use it to analyze,visualize and present
-            data. Includes tons of sample code and hours of video!
+          {data?.published_title || "Learn and grow with full lifetime access to this course."}
           </h3>
 
           <div>
@@ -80,20 +126,20 @@ export const Product = () => {
                 <StarHalfSharpIcon />
               </span>
             </span>
-            <span className="purpal underline">(17,379 rating)</span>
+            <span className="purpal underline">({data?.rating > 0 ? data?.rating || "17,379" : "17,379"} rating)</span>
             <span className="white">185,449 students</span>
           </div>
 
           <div className="Bcreated">
             <span className="white">Created by </span>
-            <span className="purpal underline">Jose Portilla</span>
+            <span className="purpal underline">{author || ""}</span>
           </div>
 
           <div className="white BBbottom">
             <span className="BBicons">
               <ReportIcon />
             </span>
-            <span className="BBbottomText">Last updated 9/2019</span>
+            <span className="BBbottomText">Last updated {data.updatedAt}</span>
             <span className="BBicons">
               {" "}
               <PublicTwoToneIcon />
@@ -108,6 +154,7 @@ export const Product = () => {
             <span className="BBbottomText underline">6more</span>
           </div>
         </div>
+
       </div>
 
       {/* ////////////////////////////-------fixBox---------------//////// */}
@@ -116,9 +163,10 @@ export const Product = () => {
         <div className="innerFixBox">
           <div className="Ftop2lines">
             <div className="flex FTH">
-              <h1 className="FT1"> ₹455 </h1>
-              <span className="FT2"> ₹3,499 </span>
-              <span className="FT3"> 87% off </span>
+              <h1 className="FT1">  {data.price !== 'Free' ? `₹${+ data?.price + 1000}` : ''}</h1>
+              <span className="FT2"> {data.price} </span>
+              {data.price !== 'Free' &&  <span className="FT3"> 75% off </span>}
+              
             </div>
             <div className="red">
               <AccessAlarmsIcon />
@@ -127,20 +175,30 @@ export const Product = () => {
           </div>
 
           <button className="gotocartBtn">Go to cart</button>
-          <button className="buynowBtn">Buy now</button>
+          <>
+         {   (data.price !== 'Free') &&
+          (
+          <Link
+            to="/payment"
+            state={{ data: data.price - (data.price * 0.75) }}
+          >
+            <button className="buynowBtn">Buy now</button>
+          </Link>)}
+          </>
+          
 
           <p className="center">30-Day Money-Back Guarantee</p>
 
           <div className="ThisCourse">
             <h4>This course includes:</h4>
             <p>
-              <OndemandVideoSharpIcon /> 21 hours on-demand video
+              <OndemandVideoSharpIcon /> {data?.curriculum[data?.curriculum.length - 1]["video"]} video
             </p>
             <p>
-              <NoteAddSharpIcon /> 3 articles
+              <NoteAddSharpIcon /> {data?.curriculum[data?.curriculum.length - 1]["article"]} articles
             </p>
             <p>
-              <SystemUpdateAltTwoToneIcon /> 4 downloadable resources
+              <SystemUpdateAltTwoToneIcon /> {data?.curriculum[data?.curriculum.length-1]["downlodable"]} downloadable resources
             </p>
             <p>
               <AllInclusiveTwoToneIcon /> Full lifetime access
@@ -169,320 +227,97 @@ export const Product = () => {
           </div>
         </div>
       </div>
-
-      {/* --------------------------------------------------------------- */}
-
       <div className="MiddleMainDiv">
-        <div className="MiddleContent">
-          <h2>What you'll learn</h2>
-          <div className="flex">
+      <div className="MiddleContent">
+      <h2>What you'll learn</h2>
+
+      {result.map((curr) => 
+              (
+                <>
+                {curr?.description &&    (       <div className="flex">
             <table>
               <tr className="MLcon flex">
                 <td className="MLcon flex">
                   <span>
                     <DoneRoundedIcon />
                   </span>
-                  <p>Have an intermediate skill level of Python programming.</p>
+                  <p>{curr.description}.</p>
                 </td>
 
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>Use the Jupyter Notebook Environment.</p>
-                </td>
               </tr>
-              <tr className="MLcon flex">
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>Use the numpy library to create and manipulate arrays.</p>
-                </td>
 
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>
-                    Use the pandas module with Python to create and structure
-                    data.
-                  </p>
-                </td>
-              </tr>
-              <tr className="MLcon flex">
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>
-                    Learn how to work with various data formats within python,
-                    including: JSON,HTML, and MS Excel Worksheets.
-                  </p>
-                </td>
 
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>
-                    Create data visualizations using matplotlib and the seaborn
-                    modules with python.
-                  </p>
-                </td>
-              </tr>
-              <tr className="MLcon flex">
-                <td className="MLcon flex">
-                  <span>
-                    <DoneRoundedIcon />
-                  </span>
-                  <p>Have a portfolio of various data analysis projects.</p>
-                </td>
-
-                <td className="MLcon flex"></td>
-              </tr>
             </table>
-          </div>
+          </div>)}
+
+          </>
+        ))}
         </div>
 
         <div className="CourseContent">
           <h2>Course content</h2>
           <div className="flex">
-            <p>15 sections • 110 lectures • 21h 5m total length</p>
-            <h5 className="Expand">Expand all sectons</h5>
+            {/* <p>15 sections • 110 lectures • 21h 5m total length</p>
+            <h5 className="Expand">Expand all sectons</h5> */}
           </div>
 
           <div className="CourceMainBox">
-            <div className="CourceBoxs">
-              <List sx={{ width: "100%" }}>
-                <ListItemButton onClick={handleClick}>
-                  <div className="OpenBox flex">
-                    {open ? (
-                      <ExpandLess className="openArrow" />
-                    ) : (
-                      <ExpandMore className="openArrow" />
-                    )}
-                    <h4>Intro to Course and Python</h4>
-                    <span className="CourseCTime">2 lecture • 7 min</span>
-                  </div>
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 3 }}></ListItemButton>
-                    <div className="AfterOpendiv">
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                    </div>
-                  </List>
-                </Collapse>
-              </List>
-            </div>
-
-            <div className="CourceBoxs">
-              <List sx={{ width: "100%" }}>
-                <ListItemButton onClick={handleClick2}>
-                  <div className="OpenBox flex">
-                    {open ? (
-                      <ExpandLess className="openArrow" />
-                    ) : (
-                      <ExpandMore className="openArrow" />
-                    )}
-                    <h4>Setup</h4>
-                    <span className="CourseCTime">3 lecture • 17 min</span>
-                  </div>
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 3 }}></ListItemButton>
-                    <div className="AfterOpendiv">
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                    </div>
-                  </List>
-                </Collapse>
-              </List>
-            </div>
-
-            <div className="CourceBoxs">
-              <List sx={{ width: "100%" }}>
-                <ListItemButton onClick={handleClick}>
-                  <div className="OpenBox flex">
-                    {open ? (
-                      <ExpandLess className="openArrow" />
-                    ) : (
-                      <ExpandMore className="openArrow" />
-                    )}
-                    <h4>Learning Numpy</h4>
-                    <span className="CourseCTime">8 lecture • 1hr 7 min</span>
-                  </div>
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 3 }}></ListItemButton>
-                    <div className="AfterOpendiv">
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                      <div className="flex ConDiv">
-                        <PlayCircleFilledRoundedIcon className="playIcon" />
-                        <p className="courseInfo">Course Info</p>
-                      </div>
-                    </div>
-                  </List>
-                </Collapse>
-              </List>
-            </div>
+            {result.map((curr) => 
+              (
+                          <div className="CourceBoxs">
+                          <List sx={{ width: "100%" }}>
+                            <ListItemButton onClick={handleClick}>
+                              <div className="OpenBox flex">
+                                {open ? (
+                                  <ExpandLess className="openArrow" />
+                                ) : (
+                                  <ExpandMore className="openArrow" />
+                                )}
+                                <h4>{curr.title}</h4>
+                                {/* <span className="CourseCTime">2 lecture • 7 min</span> */}
+                              </div>
+                            </ListItemButton>
+                            <Collapse in={open} timeout="auto" unmountOnExit>
+                              <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 3 }}></ListItemButton>
+                                <div className="AfterOpendiv">
+                                  <div className="flex ConDiv">
+                                    <PlayCircleFilledRoundedIcon className="playIcon" />
+                                    <p className="courseInfo">Course Info</p>
+                                  </div>
+                                  {/* <div className="flex ConDiv">
+                                    <PlayCircleFilledRoundedIcon className="playIcon" />
+                                    <p className="courseInfo">Course Info</p>
+                                  </div>
+                                  <div className="flex ConDiv">
+                                    <PlayCircleFilledRoundedIcon className="playIcon" />
+                                    <p className="courseInfo">Course Info</p>
+                                  </div> */}
+                                </div>
+                              </List>
+                            </Collapse>
+                          </List>
+                        </div>
+             ) 
+            )}
           </div>
 
-          <div className="moreSection">
+          {/* <div className="moreSection">
             <h5>5 more section</h5>
-          </div>
+          </div> */}
 
-          {/* <hr />
-           <hr /> */}
-          {/* ========================================================== */}
-          {/* ----------------------------------------------------------- */}
 
-          {/* <Accordion>
-               
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          
-           
-          <Typography><h4>Intro to Course and Python</h4></Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
-          {/* --------------------------------------------------------------- */}
-
-          {/* <Accordion>
-               
-               <AccordionSummary
-                 expandIcon={<ExpandMoreIcon />}
-                 aria-controls="panel1a-content"
-                 id="panel1a-header"
-               >
-                 
-                  
-                 <Typography><h4>Setup</h4></Typography>
-               </AccordionSummary>
-               <AccordionDetails>
-                 <Typography>
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                   malesuada lacus ex, sit amet blandit leo lobortis eget.
-                 </Typography>
-               </AccordionDetails>
-             </Accordion>
-            
-             <Accordion>
-               
-               <AccordionSummary
-                 expandIcon={<ExpandMoreIcon />}
-                 
-                 aria-controls="panel1a-content"
-                 id="panel1a-header"
-               >
-                   
-                 
-                  
-                 <Typography><h4>Learning Numpy</h4></Typography>
-                 
-               </AccordionSummary>
-               <AccordionDetails>
-                 <Typography>
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                   malesuada lacus ex, sit amet blandit leo lobortis eget.
-                 </Typography>
-               </AccordionDetails>
-               
-             </Accordion>
-            
-             <Accordion>
-               
-               <AccordionSummary
-                 expandIcon={<ExpandMoreIcon />}
-                 aria-controls="panel1a-content"
-                 id="panel1a-header"
-               >
-                 
-                  
-                 <Typography><h4>Intro to Course and Python</h4></Typography>
-               </AccordionSummary>
-               <AccordionDetails>
-                 <Typography>
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                   malesuada lacus ex, sit amet blandit leo lobortis eget.
-                 </Typography>
-               </AccordionDetails>
-             </Accordion>
-            
-
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-            
-          <Typography>Accordion 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Disabled Accordion</Typography>
-        </AccordionSummary>
-      </Accordion> */}
-
-          {/* ================================================================ */}
         </div>
       </div>
       <br />
       <br />
       <br />
       <br />
+</>)}
+
+      {/* --------------------------------------------------------------- */}
+
+
     </div>
   );
 };

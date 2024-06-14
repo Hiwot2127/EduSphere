@@ -8,7 +8,7 @@ const Payment = () => {
   const [price, setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    let token = JSON.parse(localStorage.getItem("token")) || null;
+    let token = localStorage.getItem("token") || null;
     if (token != null)
       axios
         .get(`https://udemy-vr4p.onrender.com/cart/${token?.user?._id}`)

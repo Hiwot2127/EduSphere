@@ -16,7 +16,7 @@ export const CartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     axios
       .get(`https://udemy-vr4p.onrender.com/cart/${token?.user?._id}`)

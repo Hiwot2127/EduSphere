@@ -44,3 +44,4 @@ if(process.argv[2] === '-d') {
 } else {
     saveData()
 }
+export default { saveData, removeData }

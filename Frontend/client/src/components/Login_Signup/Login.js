@@ -3,25 +3,39 @@ import React, { useState } from "react";
 import { ColorButton } from "../ProdCard/popperprodcard";
 import { useDispatch, useSelector } from "react-redux";
 import { authFunction } from "../../Redux/login/action";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
+import { auth,authLoading,autheError,notify} from "../../Redux/login/action";
+import axios from "../../axios/axios";
+import { useEffect } from "react";
+axios.defaults.withCredentials = true;
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/home";
+  const token = localStorage.getItem('token') || null;
+  if (token !== null) {
+    navigate(from, { replace: true });
+  }
   const [userdata, setUser] = useState({ email: "", password: "" });
   const { user, loading, error } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
+  useEffect(()=>{
+    if (token !== null) {
+      dispatch(notify("You have already logged in"))
+    }
+  },[])
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...userdata, [name]: value });
   };
-  if (user.token != undefined) {
-    console.log(user._id);
-    return <Navigate to={"/"} />;
-  }
+
   return (
-    <div>
+    <div className="login-container">
       <div className="loginDiv">
         <h4>Log In to Your Udemy Account!</h4>
         <hr className="hr_line_login"></hr>
@@ -61,8 +75,31 @@ const Login = () => {
           {/* <button id="login_input">Log in</button> */}
           <ColorButton
             onClick={() => {
-              const URL = "https://udemy-vr4p.onrender.com/join/login-popup";
-              dispatch(authFunction(userdata, URL));
+              const URL = "http://localhost:5000/api/v1/join/login";
+              dispatch(authLoading(true));
+              setTimeout(() => {
+                
+              }, 3000);
+              
+              axios
+              .post(URL, userdata)
+              .then((data) => {
+                if (data.data.success === true){
+                  localStorage.setItem('token',data.data.token);
+                  data.data.token = undefined;
+                  dispatch(auth(data));
+                  dispatch(authLoading(false));
+                  dispatch(autheError(false));
+                  setUser({...userdata,success:true})
+                }
+              })
+              .catch((err) => {
+                console.log(err.response.data);
+                dispatch(autheError(true));
+                dispatch(authLoading(false));
+                setUser({...userdata,success:false})
+              });
+              
             }}
             id="login_input"
           >
