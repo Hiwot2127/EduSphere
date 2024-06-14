@@ -22,8 +22,8 @@ const createCart = async (req, res, next) => {
 
         if (!cart) {
             cart = new Cart({ userId: req.params.userId, products: [] });
+            console.log("New cart created for user:", req.params.userId);
         }
-
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
 
         if (productIndex > -1) {
