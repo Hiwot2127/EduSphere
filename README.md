@@ -1,6 +1,6 @@
 # 📚 EduSphere
 
-Welcome to EduSphere! It is an innovative e-learning platform designed to help users acquire new skills and knowledge through a vast array of online courses. The application includes features such as user authentication, course management, payment integration, and more.
+Welcome to EduSphere! It is an e-learning platform designed to help users acquire new skills and knowledge through a vast array of online courses. The application includes features such as user authentication, course management, payment integration, and more.
 
 ## 🚀 Project Overview
 
