@@ -1,10 +1,10 @@
-# 📚 Udemy Clone
+# 📚 EduSphere
 
-Welcome to our Udemy Clone project! This project aims to replicate the core functionalities of the popular online learning platform, Udemy. The application includes features such as user authentication, course management, payment integration, and more.
+Welcome to EduSphere! It is an innovative e-learning platform designed to help users acquire new skills and knowledge through a vast array of online courses. The application includes features such as user authentication, course management, payment integration, and more.
 
 ## 🚀 Project Overview
 
-Our Udemy Clone is built using the MERN stack, which includes:
+EduSphere is built using the MERN stack, which includes:
 
 - **MongoDB**: For database management
 - **Express.js**: For the backend framework
@@ -18,6 +18,3 @@ Our Udemy Clone is built using the MERN stack, which includes:
 - **Payment Integration**: Process payments using Stripe
 - **Course Management**: Create, read, update, and delete courses
 - **Course Videos and pdf**: Upload and manage course videos and pdf
-
-
-
